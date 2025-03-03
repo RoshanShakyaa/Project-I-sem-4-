@@ -8,7 +8,7 @@
     <div class="sidebar-top">
           <div class="logo">
                   <i class="ri-menu-line toggle"></i>
-              <a href="#"><p>PocketPlan</p></a>
+              <a href="../pages/dashboard.php"><p>PocketPlan</p></a>
           </div>
             <div class="middle">
                   <a href="../pages/dashboard.php" class="tabs-container <?php echo $current_page == 'dashboard.php' ? 'active': '' ?> ">

@@ -1,6 +1,5 @@
 <?php 
     include "../connect.php";
-    include "./verify.php";
 
 
     $error_msg = "";
@@ -27,6 +26,10 @@
                     $token = hash('sha256', $user['email'] . 'secret_key');
                     setcookie('remember_me',$token,time()+(365*24*60*60),'/');
                 }
+                
+                    setcookie('user_id', $user['user_id'],time()+(365*24*60*60),'/');
+                    $token = hash('sha256', $user['email'] . 'secret_key');
+                    setcookie('remember_me',$token,time()+(365*24*60*60),'/');
                
                 header("Location: ../pages/dashboard.php");
                 exit();
@@ -62,9 +65,9 @@
                     <input class="form-control" type="password" name="password" placeholder="Password">
                     <div class="error-msg"><?php echo isset($log_error) ? $log_error: '' ?></div>
                 </div>
-                <div class="d-flex align-items-center gap-1">
-
-                    <input type="checkbox" name="remember_me"  id="remember_me"> <label for="remember_me">remember me</label>
+                <div class="remember">
+                    <input type="checkbox" name="remember_me"  id="remember_me"> 
+                    <label for="remember_me">remember me</label>
                 </div>
                 <div class="error-msg"><?php echo isset($error_msg) ? $error_msg : '' ?></div>
                     <input type="submit" class="btn sign-up-btn " name="login" value="Log In">

@@ -1,6 +1,5 @@
 <?php 
     include "../connect.php";
-    include "verify.php";
     if(isset($_POST['submit'])){
         $username = $_POST['username'];
         $email = $_POST['email'];
@@ -61,27 +60,31 @@
         <link rel="stylesheet" href="../style.css">
     </head>
     <body>
-        <div class="form-container">
-            <form action="registration.php" method="post" >
-                <h1 class="text-center">Sign Up</h1>
-                <img src="https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.jpg" alt="">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="email" name="email" placeholder="Email">
-                    <div class="error-msg"><?php echo isset($email_error)? $email_error: '' ?></div>
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="password" name="password" placeholder="Password">
-                    <div class="error-msg"><?php echo isset($password_error) ? $password_error: '' ?></div>
-                </div>
-                <div class="error-msg"><?php echo isset($error_msg) ? $error_msg : '' ?></div>
-                    <input type="submit" class="btn sign-up-btn " name="submit" value="Sign Up">
+        <div class="auth">
 
-                    <small class="text-center">Already have an account? <a href="./login.php">Log in</a></small>
-            </form>
+            <div class="form-container">
+                <form action="registration.php" method="post" >
+                    <h1 class="text-center">Sign Up</h1>
+                    <img src="https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.jpg" alt="">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="email" name="email" placeholder="Email">
+                        <div class="error-msg"><?php echo isset($email_error)? $email_error: '' ?></div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password" placeholder="Password">
+                        <div class="error-msg"><?php echo isset($password_error) ? $password_error: '' ?></div>
+                    </div>
+                    <div class="error-msg"><?php echo isset($error_msg) ? $error_msg : '' ?></div>
+                        <input type="submit" class="btn sign-up-btn " name="submit" value="Sign Up">
+
+                        <small class="text-center">Already have an account? <a href="./login.php">Log in</a></small>
+                </form>
+            </div>
         </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

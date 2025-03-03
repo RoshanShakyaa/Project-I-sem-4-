@@ -77,7 +77,20 @@
                                  <h3>
                                      <?php echo htmlspecialchars($transaction['category_name']); ?>
                                  </h3>
+                                 <div class="btn">
+
+                                     <form action="../delete_transaction.php" method="POST" >
+                                         <input type="hidden" name="type" value="<?php echo $transaction['type']; ?>">
+                                         <input type="hidden" name="amount" value="<?php echo $transaction['amount']; ?>">
+                                         <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                                         <input type="hidden" name="description" value="<?php echo $transaction['description']; ?>">
+                                         <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this transaction?');">
+                                                <img src="../assets/cross.svg" alt="">
+                                        </button>
+                                </div>
+                                </form>
                              </div>
+
  
                          <?php endforeach; ?>
                                 

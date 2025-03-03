@@ -3,7 +3,7 @@
 ?>  
 <div class="navbar">
     <div class="navbar-left">
-        <h1>--- <?php
+        <h1> <?php
             if ($current_page == 'dashboard.php') {
                 echo 'Dashboard';
             } elseif ($current_page == 'income.php') {
@@ -17,7 +17,7 @@
              elseif ($current_page == 'budget.php') {
                 echo 'Budget';
             }
-            ?>---</h1>
+            ?></h1>
     </div>
     <div class="navbar-right">
         <div class="user">

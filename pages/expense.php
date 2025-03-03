@@ -8,6 +8,7 @@
    $sql = "SELECT category_id, category_name FROM category WHERE category_type = 'expense'";
    $result = mysqli_query($conn, $sql);
    $expense_categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+   $error_msg= '';
 
    if(isset($_POST['submit'])){
     $category_id = $_POST['category_id'];
@@ -15,22 +16,31 @@
     $date = $_POST['date'];
     $description = $_POST['description'];
 
-    session_start();
+    // session_start();
     $user_id = $_SESSION['user_id']; 
 
-    $sql = 'INSERT INTO expense (user_id, category_id, description, amount, date) VALUES (?, ?, ?, ?, ?)';
+    if ($amount > $total_balance) {
+        $error_msg = "Expense can't exceed total balance";
+    }
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('iisss', $user_id, $category_id, $description, $amount, $date);
+    else{
 
-    if($stmt->execute()){
-        header("Location: ../pages/dashboard.php"); // Redirect to the dashboard or desired page
-        exit();
-    }else {
-        echo "Error: " . $stmt->error;
-    }$stmt->close();
+        $sql = 'INSERT INTO expense (user_id, category_id, description, amount, date) VALUES (?, ?, ?, ?, ?)';
+     
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('iisss', $user_id, $category_id, $description, $amount, $date);
+        if($stmt->execute()){
+            header("Location: ../pages/dashboard.php"); // Redirect to the dashboard or desired page
+            exit();
+        }else {
+            echo "Error: " . $stmt->error;
+        }$stmt->close();
+    }
+    }
+    
 
-   }
+   
 
    
    $recent_expense_query = "
@@ -80,8 +90,12 @@
                         </select>
 
                             <input type="number" placeholder="Amount" name="amount">
+                            
                             <input type="date" name="date" id="">
                             <input type="text" placeholder="detail" name="description">
+                            <?php if (!empty($error_msg)): ?>
+                                <p class="error-msg"><?php echo $error_msg; ?></p>
+                            <?php endif; ?>
                             <input type="submit" value="Submit" class="submit-btn" name="submit">
                         </form>
                     </div>
@@ -92,6 +106,7 @@
                             <div class="amount">Rs.<?php echo round($total_expense) ?></div>
                         </div>
                         <div class="table table-expense card">
+                        <div class="title"><p>Recent Transactions</p> <a href="../pages/history.php">View all</a></div>
                     <div class="row head">
                         <h3>Date</h3>
                         <h3>Amount</h3>

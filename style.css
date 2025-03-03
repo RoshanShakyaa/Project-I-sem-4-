@@ -15,7 +15,10 @@ body {
 }
 
 /*------------- register/login-------- */
-
+.auth {
+  width: 100%;
+  height: 100%;
+}
 .form-container {
   display: flex;
   align-items: center;
@@ -40,6 +43,25 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+
+    input {
+      width: 100%;
+    }
+
+    .remember {
+      margin-left: 5px;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      gap: 10px;
+      input {
+        width: fit-content;
+      }
+
+      label {
+        width: 250px;
+      }
+    }
 
     img {
       width: 100px;
@@ -196,6 +218,7 @@ a {
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
     width: 100%;
   }
 }
@@ -265,12 +288,18 @@ a {
         padding: 1rem;
         border-radius: 1rem;
         color: #111;
+
+        .flex-between {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
         h1 {
           font-weight: 500;
         }
         p {
           font-size: 14px;
-          text-align: right;
+          /* text-align: right; */
         }
         progress {
           width: 100%;
@@ -320,8 +349,22 @@ a {
     padding: 8px 18px;
     border-bottom: 1px solid #dadada;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr auto;
     align-items: center;
+    &:hover {
+      button {
+        background-color: transparent;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        outline: none;
+        display: flex;
+
+        img {
+          width: 20px;
+        }
+      }
+    }
 
     &.income {
       background: #ebfdef;

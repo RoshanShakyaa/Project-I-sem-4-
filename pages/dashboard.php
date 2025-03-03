@@ -15,6 +15,7 @@
     $budgets[] = $row;
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +86,7 @@
                         <?php foreach ($budgets as $budget): ?>
                             <div class="card budget-card">
                                 <h1><?php echo htmlspecialchars($budget['category_name']); ?></h1>
-                                <p><?php echo htmlspecialchars($budget['end_date']); ?></p>
+                                <div class="flex-between"><p>Rs.<?php echo ($budget['budget_amount']); ?></p><p><?php echo htmlspecialchars($budget['end_date']); ?></p></div>
                                 <progress id="progressBar" value="<?php echo htmlspecialchars($budget['total_expenses']); ?>" max="<?php echo htmlspecialchars($budget['budget_amount']); ?>"></progress>
                             </div>
                         <?php endforeach ?>

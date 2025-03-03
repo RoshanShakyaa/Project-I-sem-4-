@@ -1,0 +1,27 @@
+1)Introduction
+-Introductions
+-Problem Statement
+-Objetives
+-Scope Limitations
+-Report Organization
+
+2)Methodolody
+-Requirement analysis
+    -Study of Existing Stytem
+    -Interview/ questionaire
+-Feasibility Study
+    -Technical
+    -Operational
+    -Economic
+-High Level Design
+    -Methodology
+    -ER-Diagram
+    -DFD-0
+    -Flow Chart
+    -Use case
+
+3)Scheduling
+    Process |from   |to
+            |       |
+
+4) Conclusion
