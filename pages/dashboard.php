@@ -15,7 +15,6 @@
     $budgets[] = $row;
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -40,15 +39,15 @@
                 <div class="assets-info">
                     <div class="card balance">
                         <h2>Total Balance</h2>
-                        <div class="amount">Rs.<?php echo $total_balance; ?></div>
+                        <div class="amount">Rs.<?php echo number_format($total_balance); ?></div>
                     </div>
                     <div class="card income">
                         <h2>Total Income</h2>
-                        <div class="amount">Rs.<?php echo round($total_income); ?></div>
+                        <div class="amount">Rs.<?php echo number_format($total_income); ?></div>
                     </div>
                     <div class="card expense">
                         <h2>Total Expense</h2>
-                        <div class="amount">Rs.<?php echo round($total_expense); ?></div>
+                        <div class="amount">Rs.<?php echo number_format($total_expense); ?></div>
                     </div>
                 </div>
                 <div class="dashboard-bottom">
@@ -58,22 +57,25 @@
                         <div class="row head">
                                 <h3>Date</h3>
 
-                                
                                 <h3>Amount</h3>
 
                                 <h3>Category</h3>
+                                <h3>Description</h3>
                         </div>
                         <?php foreach ($recent_transactions as $transaction): ?>
                             <div class="row <?php echo $transaction['type'] == 'income' ? 'income' : 'expense'; ?>">
                                 <h3>
-                                    <?php echo htmlspecialchars($transaction['formatted_date']); ?>:
+                                    <?php echo htmlspecialchars($transaction['formatted_date']); ?>
                                 </h3>
                                 <h3>
-                                    <?php echo htmlspecialchars($transaction['amount']); ?> 
+                                    <?php echo number_format($transaction['amount']); ?> 
                                 </h3>
                                 <h3>
                                     <?php echo htmlspecialchars($transaction['category_name']); ?>
                                 </h3>
+                                <h3>
+                                <?php echo htmlspecialchars($transaction['description']); ?>
+                            </h3>
                             </div>
 
                         <?php endforeach; ?>
@@ -82,15 +84,36 @@
                     
                     
                     <div class=" budget-cards">
-                        <h1>Budget</h1>
-                        <?php foreach ($budgets as $budget): ?>
-                            <div class="card budget-card">
-                                <h1><?php echo htmlspecialchars($budget['category_name']); ?></h1>
-                                <div class="flex-between"><p>Rs.<?php echo ($budget['budget_amount']); ?></p><p><?php echo htmlspecialchars($budget['end_date']); ?></p></div>
-                                <progress id="progressBar" value="<?php echo htmlspecialchars($budget['total_expenses']); ?>" max="<?php echo htmlspecialchars($budget['budget_amount']); ?>"></progress>
-                            </div>
-                        <?php endforeach ?>
-                    </div>
+                            <h1 class="budget-title">Budget</h1>
+                                <div class="budget-grid">
+                                <?php foreach ($budgets as $budget): 
+                                $is_expired = strtotime($budget['end_date']) < time();
+                                $is_exceeded = $budget['total_expenses'] > $budget['budget_amount']; 
+                                ?>
+                                <div class="card budget-card <?php echo $is_expired ? 'expired' : ''; ?> <?php echo $is_exceeded ? 'exceeded' : ''; ?>">
+                                    <h1><?php echo htmlspecialchars($budget['category_name']); ?></h1>
+                                    <div class="flex-between">
+                                        <p>Rs.<?php echo number_format($budget['budget_amount']); ?></p>
+                                        <p><?php echo htmlspecialchars($budget['end_date']); ?></p>
+                                    </div>
+                                    <progress id="progressBar" value="<?php echo htmlspecialchars($budget['total_expenses']); ?>" max="<?php echo htmlspecialchars($budget['budget_amount']); ?>"></progress>
+                                    
+                                    <?php if ($is_expired): ?>
+                                        <p style="color: red;">This budget has expired.</p>
+                                    <?php elseif ($is_exceeded): ?>
+                                        <p style="color: red;">You have exceeded this budget.</p>
+                                    <?php endif; ?>
+
+                                    <form action="../delete_budget.php" method="POST" style="margin-top: 10px;">
+                                        <input type="hidden" name="budget_id" value="<?php echo $budget['budget_id']; ?>">
+                                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this budget?');">
+                                            Delete Budget
+                                        </button>
+                                    </form>
+                                </div>
+                            <?php endforeach ?>
+                     </div>
+       
                 </div>
             </section>
 

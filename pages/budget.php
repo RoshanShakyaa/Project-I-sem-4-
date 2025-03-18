@@ -26,7 +26,7 @@
     $stmt->bind_param('iisdss', $user_id, $category_id, $description, $amount, $start_date,$end_date);
 
     if($stmt->execute()){
-        header("Location: ../pages/budget.php"); 
+        header("Location: ../pages/dashboard.php"); 
         exit();
     }else {
         echo "Error: " . $stmt->error;
