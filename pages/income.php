@@ -15,21 +15,22 @@
     $date = $_POST['date'];
     $description = $_POST['description'];
 
-    session_start();
     $user_id = $_SESSION['user_id']; 
-
-    $sql = 'INSERT INTO income (user_id, category_id, description, amount, date) VALUES (?, ?, ?, ?, ?)';
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('iisss', $user_id, $category_id, $description, $amount, $date);
-
-    if($stmt->execute()){
-        header("Location: ../pages/dashboard.php"); // Redirect to the dashboard or desired page
-        exit();
-    }else {
-        echo "Error: " . $stmt->error;
-    }$stmt->close();
-
+    if ($amount <= 0) {
+        $error_msg = "Amount must be greater than zero";
+    } else {
+        $sql = 'INSERT INTO income (user_id, category_id, description, amount, date) VALUES (?, ?, ?, ?, ?)';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('iisss', $user_id, $category_id, $description, $amount, $date);
+        if($stmt->execute()){
+            header("Location: ../pages/dashboard.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+        $stmt->close();
+    }
+    
    }
 
    $recent_income_query = "
@@ -79,10 +80,13 @@
                                 </option>
                             <?php endforeach; ?>
                             </select>
+                            <input type="number" placeholder="Amount" name="amount" required>
 
-                            <input type="number" placeholder="Amount" name="amount">
-                            <input type="date" name="date" id="">
+                            <input type="date" name="date" required>
                             <input type="text" placeholder="detail" name="description">
+                            <?php if (!empty($error_msg)): ?>
+                                <p class="error-msg" style="color: red;"><?php echo $error_msg; ?></p>
+                            <?php endif; ?>
                             <input type="submit" value="Submit" class="submit-btn" name="submit">
                         </form>
                     </div>

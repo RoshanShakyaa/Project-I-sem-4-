@@ -15,27 +15,25 @@
     $amount = $_POST['amount'];
     $date = $_POST['date'];
     $description = $_POST['description'];
+    
 
-    // session_start();
     $user_id = $_SESSION['user_id']; 
-
-    if ($amount > $total_balance) {
-        $error_msg = "Expense can't exceed total balance";
-    }
-
-    else{
-
+    if ($amount <= 0) {
+        $error_msg = "Amount must be greater than zero.";
+    } elseif ($amount > $total_balance) {
+        $error_msg = "Expense can't exceed total balance.";
+    } else {
         $sql = 'INSERT INTO expense (user_id, category_id, description, amount, date) VALUES (?, ?, ?, ?, ?)';
-     
-        
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('iisss', $user_id, $category_id, $description, $amount, $date);
-        if($stmt->execute()){
-            header("Location: ../pages/dashboard.php"); // Redirect to the dashboard or desired page
+        
+        if ($stmt->execute()) {
+            header("Location: ../pages/dashboard.php");
             exit();
-        }else {
+        } else {
             echo "Error: " . $stmt->error;
-        }$stmt->close();
+        }
+        $stmt->close();
     }
     }
     
@@ -89,9 +87,9 @@
                             <?php endforeach; ?>
                         </select>
 
-                            <input type="number" placeholder="Amount" name="amount">
+                            <input type="number" placeholder="Amount" name="amount" min="1" required>
                             
-                            <input type="date" name="date" id="">
+                            <input type="date" name="date" required>
                             <input type="text" placeholder="detail" name="description">
                             <?php if (!empty($error_msg)): ?>
                                 <p class="error-msg"><?php echo $error_msg; ?></p>

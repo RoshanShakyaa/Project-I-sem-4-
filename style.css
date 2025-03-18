@@ -156,10 +156,6 @@ body {
       font-size: 20px;
     }
 
-    p {
-      /* display: block; */
-    }
-
     &:hover {
       background: #dadada18;
     }
