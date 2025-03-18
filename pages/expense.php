@@ -13,10 +13,10 @@
    if(isset($_POST['submit'])){
     $category_id = $_POST['category_id'];
     $amount = $_POST['amount'];
-    $date = $_POST['date'];
+    $date = $_POST['date'] ?? date('Y-m-d');
     $description = $_POST['description'];
 
-    // session_start();
+    
     $user_id = $_SESSION['user_id']; 
 
     if ($amount > $total_balance) {
@@ -115,7 +115,7 @@
                     <?php foreach ($recent_expenses as $expense): ?>
                             <div class="row ">
                                 <h3>
-                                    <?php echo date('Y-M-d', strtotime($expense['date'])); ?>:
+                                    <?php echo date('Y-M-d', strtotime($expense['date'])); ?>
                                 </h3>
                                 <h3>
                                     <?php echo  round($expense['amount']); ?> 

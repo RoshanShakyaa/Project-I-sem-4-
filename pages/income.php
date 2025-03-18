@@ -12,7 +12,7 @@
    if(isset($_POST['submit'])){
     $category_id = $_POST['category_id'];
     $amount = $_POST['amount'];
-    $date = $_POST['date'];
+    $date = $_POST['date'] ?? date('Y-m-d');
     $description = $_POST['description'];
 
     session_start();
@@ -24,7 +24,7 @@
     $stmt->bind_param('iisss', $user_id, $category_id, $description, $amount, $date);
 
     if($stmt->execute()){
-        header("Location: ../pages/dashboard.php"); // Redirect to the dashboard or desired page
+        header("Location: ../pages/dashboard.php");
         exit();
     }else {
         echo "Error: " . $stmt->error;
@@ -90,29 +90,29 @@
 
                         <div class="card income">
                             <h2>Total Income</h2>
-                            <div class="amount">Rs. <?php echo round($total_income) ?></div>
+                            <div class="amount">Rs. <?php echo number_format($total_income) ?></div>
                         </div>
                         <div class="table table-expense card">
-                    <div class="row head">
-                        <h3>Date</h3>
-                        <h3>Amount</h3>
-                        <h3>Category</h3>
-                    </div>
-                    <?php foreach ($recent_incomes as $income): ?>
-                            <div class="row ">
-                                <h3>
-                                    <?php echo date('Y-M-d', strtotime($income['date'])); ?>:
-                                </h3>
-                                <h3>
-                                    <?php echo  round($income['amount']); ?> 
-                                </h3>
-                                <h3>
-                                    <?php echo htmlspecialchars($income['category_name']); ?>
-                                </h3>
+                            <div class="row head">
+                                <h3>Date</h3>
+                                <h3>Amount</h3>
+                                <h3>Category</h3>
                             </div>
-
-                    <?php endforeach; ?>
-                    
+                                <?php foreach ($recent_incomes as $income): ?>
+                                <div class="row ">
+                                    <h3>
+                                        <?php echo date('Y-M-d', strtotime($income['date'])); ?>
+                                    </h3>
+                                    <h3>
+                                        <?php echo  number_format($income['amount']); ?> 
+                                    </h3>
+                                    <h3>
+                                        <?php echo htmlspecialchars($income['category_name']); ?>
+                                    </h3>
+                                </div>
+                                <?php endforeach; ?>
+                        </div>
+                    </div>
                 </div>
             </section>
 

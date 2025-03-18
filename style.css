@@ -1,8 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Poppins;
+  font-family: "Inter", sans-serif;
 }
 
 html,
@@ -262,10 +263,17 @@ a {
     grid-template-columns: 2fr 1fr;
     gap: 1.5rem;
 
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .budget-title {
+      margin-bottom: 1rem;
+    }
+
     .budget-cards {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
-      height: 350px;
       overflow-y: auto;
       color: #dadada;
 
@@ -283,7 +291,7 @@ a {
         }
         border: 1px solid #dadadada;
 
-        height: 120px;
+        min-height: 120px;
         /* background: lightblue; */
         padding: 1rem;
         border-radius: 1rem;
@@ -324,6 +332,30 @@ a {
         }
       }
     }
+
+    .budget-card.expired {
+      border: 2px solid #dadadada;
+      opacity: 0.7;
+    }
+
+    .budget-card.exceeded {
+      border: 2px solid rgb(216, 131, 131);
+    }
+
+    .delete-btn {
+      background-color: #111;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .budget-grid {
+      display: grid;
+      grid-template-columns: 1;
+      gap: 1.5rem;
+    }
   }
 }
 .table {
@@ -349,20 +381,32 @@ a {
     padding: 8px 18px;
     border-bottom: 1px solid #dadada;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr auto;
     align-items: center;
-    &:hover {
-      button {
-        background-color: transparent;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        outline: none;
-        display: flex;
 
-        img {
-          width: 20px;
-        }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      i {
+        cursor: pointer;
+      }
+      .cross {
+        font-size: 1.2rem;
+      }
+    }
+
+    button {
+      background-color: transparent;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      outline: none;
+      display: flex;
+
+      img {
+        width: 20px;
       }
     }
 
